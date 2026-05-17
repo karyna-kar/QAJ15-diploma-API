@@ -1,5 +1,5 @@
-import { APIRequestContext } from '@playwright/test';
-import { RequestObject } from '../types/types';
+import { APIRequestContext } from "@playwright/test";
+import { RequestObject } from "../types/types";
 
 export class RestfulController {
   private request: APIRequestContext;
@@ -7,7 +7,7 @@ export class RestfulController {
 
   constructor(request: APIRequestContext, baseUrl: string) {
     this.request = request;
-    this.baseUrl = baseUrl + '/v3/b';
+    this.baseUrl = baseUrl + "/v3/b";
   }
 
   async getBinById(id: string) {
@@ -21,7 +21,7 @@ export class RestfulController {
   async createBin(binPayload: RequestObject | {}) {
     return this.request.post(this.baseUrl, {
       data: binPayload,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     });
   }
 
@@ -35,7 +35,7 @@ export class RestfulController {
   async updateBin(id: string, binPayload: RequestObject | {}) {
     return this.request.put(`${this.baseUrl}/${id}`, {
       data: binPayload,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     });
   }
 

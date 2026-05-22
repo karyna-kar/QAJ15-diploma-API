@@ -1,5 +1,5 @@
-import { APIRequestContext } from "@playwright/test";
-import { RequestObject } from "../types/types";
+import { APIRequestContext } from '@playwright/test';
+import { RequestObject } from '../types/types';
 
 export class RestfulController {
   private request: APIRequestContext;
@@ -7,10 +7,10 @@ export class RestfulController {
 
   constructor(request: APIRequestContext, baseUrl: string) {
     this.request = request;
-    this.baseUrl = baseUrl + "/v3/b";
+    this.baseUrl = baseUrl + '/v3/b';
   }
 
-  async getBinById(id: string) {
+  async getBin(id: string) {
     return this.request.get(`${this.baseUrl}/${id}`);
   }
 
@@ -21,28 +21,28 @@ export class RestfulController {
   async createBin(binPayload: RequestObject | {}) {
     return this.request.post(this.baseUrl, {
       data: binPayload,
-      headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json' }
     });
   }
 
   async createBinWithoutHeader(binPayload: RequestObject | {}) {
     return this.request.post(this.baseUrl, {
       data: JSON.stringify(binPayload),
-      headers: {},
+      headers: {}
     });
   }
 
   async updateBin(id: string, binPayload: RequestObject | {}) {
     return this.request.put(`${this.baseUrl}/${id}`, {
       data: binPayload,
-      headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json' }
     });
   }
 
-  async updateWithoutHeader(id: string, binPayload: RequestObject | {}) {
+  async updateBinWithoutHeader(id: string, binPayload: RequestObject | {}) {
     return this.request.put(`${this.baseUrl}/${id}`, {
       data: JSON.stringify(binPayload),
-      headers: {},
+      headers: {}
     });
   }
 }

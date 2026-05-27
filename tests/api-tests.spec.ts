@@ -108,14 +108,14 @@ test.describe('POST', () => {
     const originalPayload = { sample: 'Hello World' };
     const response = await restfulControllerAuthorizedUser.createBin(originalPayload);
     const bodyResponse = await response.json();
+    const createdId = bodyResponse.metadata.id;
+    createdBins.push(createdId);
     expect(response.status()).toBe(200);
     expect(bodyResponse.record).toMatchObject(originalPayload);
-    const createdId = bodyResponse.metadata.id;
     const getResponse = await restfulControllerAuthorizedUser.getBin(createdId);
     const bodyGetResponse = await getResponse.json();
     expect(getResponse.status()).toBe(200);
     expect(bodyGetResponse.metadata.id).toEqual(createdId);
-    createdBins.push(createdId);
   });
 
   test('POST /b: create a new empty bin', async ({ restfulControllerAuthorizedUser }) => {

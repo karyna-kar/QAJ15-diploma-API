@@ -10,18 +10,18 @@ export class RestfulController {
     this.baseUrl = baseUrl + '/v3/b';
   }
 
-  async getBin(id: string) {
-    return this.request.get(`${this.baseUrl}/${id}`);
+  async getBin(id: string, headers?: Record<string, string>) {
+    return this.request.get(`${this.baseUrl}/${id}`, { headers: { ...headers } });
   }
 
-  async deleteBin(id: string) {
-    return this.request.delete(`${this.baseUrl}/${id}`);
+  async deleteBin(id: string, headers?: Record<string, string>) {
+    return this.request.delete(`${this.baseUrl}/${id}`, { headers: { ...headers } });
   }
 
-  async createBin(binPayload: RequestObject | {}) {
+  async createBin(binPayload: RequestObject | {}, headers?: Record<string, string>) {
     return this.request.post(this.baseUrl, {
       data: binPayload,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json', ...headers }
     });
   }
 
@@ -32,10 +32,10 @@ export class RestfulController {
     });
   }
 
-  async updateBin(id: string, binPayload: RequestObject | {}) {
+  async updateBin(id: string, binPayload: RequestObject | {}, headers?: Record<string, string>) {
     return this.request.put(`${this.baseUrl}/${id}`, {
       data: binPayload,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json', ...headers }
     });
   }
 

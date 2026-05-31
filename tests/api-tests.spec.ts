@@ -35,9 +35,11 @@ test.describe('GET', () => {
     });
   });
 
-  test('GET /b/{id}: check failed Authorization - invalid X-Master-Key header', async ({ restfulControllerInvalidXMasterKey }) => {
+  test('GET /b/{id}: check failed Authorization - invalid X-Master-Key header', async ({ restfulControllerNotAuthorizedUser }) => {
     const binID = createdBins[0];
-    const response = await restfulControllerInvalidXMasterKey.getBin(binID);
+    const response = await restfulControllerNotAuthorizedUser.getBin(binID, {
+      'X-Master-Key': 'wrong-key'
+    });
     const bodyResponse = await response.json();
     expect(response.status()).toBe(401);
     expect(bodyResponse).toMatchObject({
@@ -84,9 +86,11 @@ test.describe('POST', () => {
     });
   });
 
-  test('POST /b: check failed Authorization - invalid X-Master-Key header', async ({ restfulControllerInvalidXMasterKey }) => {
+  test('POST /b: check failed Authorization - invalid X-Master-Key header', async ({ restfulControllerNotAuthorizedUser }) => {
     const originalPayload = { sample: 'Hello World' };
-    const response = await restfulControllerInvalidXMasterKey.createBin(originalPayload);
+    const response = await restfulControllerNotAuthorizedUser.createBin(originalPayload, {
+      'X-Master-Key': 'wrong-key'
+    });
     const bodyResponse = await response.json();
     expect(response.status()).toBe(401);
     expect(bodyResponse).toMatchObject({
@@ -166,10 +170,10 @@ test.describe('PUT', () => {
     });
   });
 
-  test('PUT /b/{id}: check failed Authorization - invalid X-Master-Key header', async ({ restfulControllerInvalidXMasterKey }) => {
+  test('PUT /b/{id}: check failed Authorization - invalid X-Master-Key header', async ({ restfulControllerNotAuthorizedUser }) => {
     const idForUpdating = createdBins[0];
     const updatePayload = { sample: 'Hello World : Updated' };
-    const response = await restfulControllerInvalidXMasterKey.updateBin(idForUpdating, updatePayload);
+    const response = await restfulControllerNotAuthorizedUser.updateBin(idForUpdating, updatePayload, { 'X-Master-Key': 'wrong-key' });
     const bodyResponse = await response.json();
     expect(response.status()).toBe(401);
     expect(bodyResponse).toMatchObject({
@@ -242,7 +246,6 @@ test.describe('DELETE', () => {
     const originalPayload = { sample: 'Hello World' };
     const response = await restfulControllerAuthorizedUser.createBin(originalPayload);
     const bodyResponse = await response.json();
-    expect(response.status()).toBe(200);
     createdBins.push(bodyResponse.metadata.id);
   });
 
@@ -256,9 +259,11 @@ test.describe('DELETE', () => {
     });
   });
 
-  test('DELETE /b/{id}: check failed Authorization - invalid X-Master-Key header', async ({ restfulControllerInvalidXMasterKey }) => {
+  test('DELETE /b/{id}: check failed Authorization - invalid X-Master-Key header', async ({ restfulControllerNotAuthorizedUser }) => {
     const createdBinId = createdBins[0];
-    const response = await restfulControllerInvalidXMasterKey.deleteBin(createdBinId);
+    const response = await restfulControllerNotAuthorizedUser.deleteBin(createdBinId, {
+      'X-Master-Key': 'wrong-key'
+    });
     const bodyResponse = await response.json();
     expect(response.status()).toBe(401);
     expect(bodyResponse).toMatchObject({

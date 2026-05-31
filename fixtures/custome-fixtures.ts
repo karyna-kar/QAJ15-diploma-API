@@ -22,14 +22,5 @@ export const test = baseTest.extend<ExtendedFicture>({
     const baseURL = 'https://api.jsonbin.io';
     const controller = new RestfulController(request, baseURL);
     await use(controller);
-  },
-
-  restfulControllerInvalidXMasterKey: async ({ playwright }, use) => {
-    const baseURL = 'https://api.jsonbin.io';
-    const authRequest = await playwright.request.newContext({
-      extraHTTPHeaders: { 'X-Master-Key': 'Test' }
-    });
-    const controller = new RestfulController(authRequest, baseURL);
-    await use(controller);
   }
 });
